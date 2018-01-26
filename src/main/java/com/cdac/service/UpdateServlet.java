@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.dao.BaseHibernateDao;
-import com.dao.UserDao;
-import com.entity.User;
+import com.cdac.dao.UserDao;
+
 
 /**
  * Servlet implementation class UpdateServlet

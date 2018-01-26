@@ -7,10 +7,6 @@ import com.cdac.model.Course;
 
 public class CourseDao extends BaseHibernateDao {
 	
-	public void insert(Course course){
-		insert(course);
-	}
-	
 	public List<Course> listCourse(){
 		return getList(Course.class);
 	}

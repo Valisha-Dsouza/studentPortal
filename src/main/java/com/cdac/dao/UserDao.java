@@ -13,9 +13,6 @@ import com.cdac.model.User;
 
 public class UserDao extends BaseHibernateDao{
 	
-	public void insert(User users){
-		insert(users);
-	}
 	
 	public List<User> listCourse(){
 		return getList(User.class);

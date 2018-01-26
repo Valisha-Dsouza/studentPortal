@@ -5,10 +5,6 @@ import java.util.List;
 
 public class AttendanceDao extends BaseHibernateDao {
 	
-	public void insert(Attendance attendance){
-		insert(attendance);
-	}
-	
 	public List<Attendance> listAttendance(){
 		return getList(Attendance.class);
 	}

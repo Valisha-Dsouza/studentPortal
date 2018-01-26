@@ -5,35 +5,25 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 
 @Entity
 @Table(name = "resultsproject")
 public class Results {
-	@Column(name = "userid")
-	String userId;
-	@Column(name = "subjectid")
-	String subjectId;
+	@EmbeddedId
+	ResultComposite resultId;
 	@Column(name = "labmarks")
 	int labMarks;
 	@Column(name = "theorymarks")
 	int theoryMarks;
-
-	@AttributeOverrides({ @AttributeOverride(name = "userid", column = @Column(name = "userid")),
-			@AttributeOverride(name = "subjectid", column = @Column(name = "subjectid")) })
-	public String getUserId() {
-		return userId;
+	
+	public ResultComposite getResultId() {
+		return resultId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getSubjectId() {
-		return subjectId;
-	}
-
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setResultId(ResultComposite resultId) {
+		this.resultId = resultId;
 	}
 
 	public int getLabMarks() {

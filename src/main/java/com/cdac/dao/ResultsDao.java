@@ -11,9 +11,14 @@ import org.hibernate.Transaction;
 
 
 public class ResultsDao extends BaseHibernateDao {
-	public void insert(Results result){
-		insert(result);
+	
+	
+	public void insert(List<Results> results){
+		for(Results result:results){
+			insert(result);
+		}
 	}
+	
 	
 	public List<Results> listCourse(){
 		return getList(Results.class);

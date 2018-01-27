@@ -51,25 +51,49 @@
 	});
 </script>
 <script>
-	$(document).ready(
-			function() {
-				$('#tb1').DataTable(
-						{
-							"sPaginationType" : "simple",
-							"bJQueryUI" : true,
-							"bProcessing" : true,
-							"bServerSide" : true,
-							"sAjaxSource" : "StudentResultService",
-							"iDisplayLength" : 10,
-							"iDisplayStart" : 0,
-							"columnDefs": [
-							               { "width": "20%", "targets": 0 },
-							               { "width": "20%", "targets": 0 },
-							               { "width": "20%", "targets": 0 },
-							               { "width": "20%", "targets": 0 }
-							             ]
-						});
-			});
+	$(document).ready(function() {
+		$('#tb1').DataTable({
+			"sPaginationType" : "simple",
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : "StudentResultService",
+			"iDisplayLength" : 10,
+			"iDisplayStart" : 0,
+			"columnDefs" : [ {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			} ]
+		});
+		$('#attendance_tb1').DataTable({
+			"sPaginationType" : "simple",
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : "StudentAttendanceService",
+			"iDisplayLength" : 10,
+			"iDisplayStart" : 0,
+			"columnDefs" : [ {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			} ]
+		});
+	});
 </script>
 <link rel="stylesheet" href="pages/tabstyle.css">
 </head>
@@ -161,7 +185,7 @@
 			</form>
 		</div>
 	</div>
-	<div id="Results" class="tabcontent container" >
+	<div id="Results" class="tabcontent container">
 		<table name="tb" id="tb1" class="table table-striped table-bordered"
 			cellspacing="0" width="100%">
 			<thead>
@@ -178,7 +202,21 @@
 		</table>
 	</div>
 
-	<div id="Attendance" class="tabcontent"></div>
+	<div id="Attendance" class="tabcontent container">
+		<table name="tb" id="attendance_tb1" class="table table-striped table-bordered"
+			cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Total Class</th>
+					<th>Class Attended</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot></tfoot>
+		</table>
+	</div>
 
 	<div id="Notification" class="tabcontent">
 		<h3>Notifications</h3>

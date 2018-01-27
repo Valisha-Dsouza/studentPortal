@@ -1,6 +1,7 @@
 package com.cdac.model;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,15 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "db_student_attendance")
 public class Attendance {
-	@Id
-	@Column(name = "student_id")
-	String studentId;
+	@EmbeddedId
+	AttendanceComposite attendanceId;
 	@Column(name = "total_class")
 	int totalClass;
 	@Column(name = "class_attended")
 	int classAttended;
-	@Column(name = "subject_id")
-	String subjectId;
+	
 	@Column(name = "percent")
 	float percent;
 
@@ -31,13 +30,6 @@ public class Attendance {
 		this.percent = percent;
 	}
 
-	public String getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
-	}
 
 	public int getTotalClass() {
 		return totalClass;
@@ -55,12 +47,13 @@ public class Attendance {
 		this.classAttended = classAttended;
 	}
 
-	public String getSubjectId() {
-		return subjectId;
+	public AttendanceComposite getAttendanceId() {
+		return attendanceId;
 	}
 
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setAttendanceId(AttendanceComposite attendanceId) {
+		this.attendanceId = attendanceId;
 	}
+
 
 }

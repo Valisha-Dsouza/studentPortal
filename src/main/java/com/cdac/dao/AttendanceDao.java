@@ -28,7 +28,7 @@ public class AttendanceDao extends BaseHibernateDao {
 			try
 			{
 				tx = session.beginTransaction();
-				Query hql = session.createQuery("from Attendance r where r.studentId=:usid");
+				Query hql = session.createQuery("from Attendance r where r.attendanceId.userId=:usid");
 				hql.setParameter("usid", userid);
 			// cr=session.createCriteria(Results.class);
 			 

@@ -63,7 +63,8 @@ public class StudentResultService extends HttpServlet {
 			}
 		}
 		// Sorting
-		if (request.getParameter("iSortCol_0") != null && request.getParameter("sSortDir_0") != null) {
+		if (request.getParameter("iSortCol_0") != null && request.getParameter("sSortDir_0") != null
+				&& outList != null) {
 			final int sortColumnIndex = Integer.valueOf(request.getParameter("iSortCol_0"));
 			final int sortDirection = request.getParameter("sSortDir_0").equals("asc") ? -1 : 1;
 
@@ -84,35 +85,36 @@ public class StudentResultService extends HttpServlet {
 						return r1.getResultId().getSubjectid().compareTo(r2.getResultId().getSubjectid())
 								* sortDirection;
 					case 3:
-						return r1.getStatus().compareTo(r2.getStatus())
-								* sortDirection;
+						return r1.getStatus().compareTo(r2.getStatus()) * sortDirection;
 					}
 					return 0;
 				}
 			});
 		}
 		// Paginating
-		int startParam = 0;
-		int endParam;
-		if (outList.size() < displayStart + displayLength) {
-			startParam = displayStart;
-			endParam = outList.size();
-		} else {
-			startParam = displayStart;
-			endParam = displayStart + displayLength;
-		}
+		if (outList != null) {
+			int startParam = 0;
+			int endParam = 0;
+			if (outList.size() < displayStart + displayLength) {
+				startParam = displayStart;
+				endParam = outList.size();
+			} else {
+				startParam = displayStart;
+				endParam = displayStart + displayLength;
+			}
 
-		for (int i = startParam; i < endParam; i++) {
-			JsonArray row = new JsonArray();
-			row.add(new JsonPrimitive(outList.get(i).getResultId().getSubjectid()));
-			row.add(new JsonPrimitive(outList.get(i).getLabMarks()));
-			row.add(new JsonPrimitive(outList.get(i).getTheoryMarks()));
-			row.add(new JsonPrimitive(outList.get(i).getStatus()));
-			data.add(row);
+			for (int i = startParam; i < endParam; i++) {
+				JsonArray row = new JsonArray();
+				row.add(new JsonPrimitive(outList.get(i).getResultId().getSubjectid()));
+				row.add(new JsonPrimitive(outList.get(i).getLabMarks()));
+				row.add(new JsonPrimitive(outList.get(i).getTheoryMarks()));
+				row.add(new JsonPrimitive(outList.get(i).getStatus()));
+				data.add(row);
+			}
 		}
 		jsonResponse.add("aaData", data);
-		jsonResponse.addProperty("iTotalRecords", outList.size());
-		jsonResponse.addProperty("iTotalDisplayRecords", outList.size());
+		jsonResponse.addProperty("iTotalRecords", outList!=null?outList.size():0);
+		jsonResponse.addProperty("iTotalDisplayRecords", outList!=null?outList.size():0);
 		response.getWriter().write(jsonResponse.toString());
 	}
 

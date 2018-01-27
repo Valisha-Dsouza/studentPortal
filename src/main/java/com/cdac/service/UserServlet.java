@@ -13,9 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 
+import com.cdac.dao.CourseDao;
+import com.cdac.dao.SubjectDao;
 import com.cdac.dao.UserDao;
+import com.cdac.model.Course;
+import com.cdac.model.Subject;
 import com.cdac.model.User;
 
 /**
@@ -47,12 +52,17 @@ public class UserServlet extends HttpServlet {
 		User user = null;
 		String userid = request.getParameter("loginid");
 		String upasswd = request.getParameter("upass");
+		String course = request.getParameter("courseId");
 		UserDao userdao = new UserDao();
+		CourseDao courseDao = new CourseDao();
+		SubjectDao subjectDao = new SubjectDao();
 		user = userdao.authenticate(userid, upasswd);
 		HttpSession session = request.getSession();
 		session.setAttribute("sesuid", userid);
-		if (user != null) {
-
+		if(course!=null){
+			List<Course> courses = courseDao.findyId(course);
+			List<Subject> subjects = subjectDao.findByCourse(course);
+			response.set
 		}
 		if (user != null && user.getUserRole() == 0) {
 

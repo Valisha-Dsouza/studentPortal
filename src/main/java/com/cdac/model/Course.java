@@ -12,18 +12,18 @@ public class Course {
 	@Column(name = "course_id")
 	String courseId;
 	@Column(name = "course_name")
-	String course_name;
+	String courseName;
 	public String getCourseId() {
 		return courseId;
 	}
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
-	public String getCourse_name() {
-		return course_name;
+	public String getCourseName() {
+		return courseName;
 	}
-	public void setCourse_name(String course_name) {
-		this.course_name = course_name;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 }

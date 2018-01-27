@@ -20,7 +20,7 @@ public class ResultsDao extends BaseHibernateDao {
 	}
 	
 	
-	public List<Results> listCourse(){
+	public List<Results> listResults(){
 		return getList(Results.class);
 	}
 	

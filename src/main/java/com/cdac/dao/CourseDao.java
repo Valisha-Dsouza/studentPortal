@@ -16,7 +16,13 @@ public class CourseDao extends BaseHibernateDao {
 	}
 	
 	public List<Course> findyId(String id){
-		return executeQuery("select from Course where courseId = "+id);
+		return executeQuery(" from Course where courseId = '"+id+"'");
 	}
 	
+	public static void main(String[] args) {
+		CourseDao courseDao = new CourseDao();
+		System.out.println(courseDao.listCourse());
+		System.out.println(courseDao.findById("aa", Course.class));
+	}
+
 }

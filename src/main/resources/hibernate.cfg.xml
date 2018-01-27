@@ -29,6 +29,7 @@
       <property name="hibernate.current_session_context_class">
       org.hibernate.context.ThreadLocalSessionContext</property>
       <mapping class="com.cdac.model.User"/>
+      <mapping class="com.cdac.model.Course"/>
       <mapping class="com.cdac.model.Results"/>
       </session-factory>
       </hibernate-configuration>

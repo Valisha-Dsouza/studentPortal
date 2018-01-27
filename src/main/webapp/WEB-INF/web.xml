@@ -22,6 +22,12 @@
   	<description></description>
   	<servlet-class>com.cdac.service.AttendancePrintByUser</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>StudentResultService</servlet-name>
+  	<display-name>StudentResultService</display-name>
+  	<description></description>
+  	<servlet-class>com.cdac.service.StudentResultService</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>NotificationService</servlet-name>
   	<url-pattern>/NotificationService</url-pattern>
@@ -33,5 +39,9 @@
   <servlet-mapping>
   	<servlet-name>AttendancePrintByUser</servlet-name>
   	<url-pattern>/AttendancePrintByUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>StudentResultService</servlet-name>
+  	<url-pattern>/StudentResultService</url-pattern>
   </servlet-mapping>
 </web-app>

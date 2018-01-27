@@ -4,7 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
- 
+ /*create table userproject(userid varchar(20),username varchar(30),useremail varchar(100),
+userphone varchar(20),userpasswd varchar(30),primary key(userid));*/
 @Entity
 @Table(name="userproject")
 public class User
@@ -14,9 +15,9 @@ public class User
 	String userId;
 	@Column(name="username")
 	String userName;
-	@Column(name="userpass")
+	@Column(name="userpasswd")
 	String userPass;
-	@Column(name="userRole")
+	@Column(name="role")
 	int userRole;
 	@Column(name="useremail")
 	String userEmail;

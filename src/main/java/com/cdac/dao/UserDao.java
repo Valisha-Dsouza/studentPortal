@@ -21,7 +21,33 @@ public class UserDao extends BaseHibernateDao{
 	public void delete(User subject){
 		delete(subject);
 	}
-	
+	public User getUserById(String usid)
+	{
+		Session session = getSession();
+		Transaction tx = null;
+		User user=null;
+		try
+		{
+			tx = session.beginTransaction();
+			Query hql = session.createQuery("from User u where u.userId=:uid ");
+			hql.setParameter("uid", usid);
+			List<User> result = hql.list();
+
+			Iterator<User> iterator = result.iterator();
+			while (iterator.hasNext()) {
+				user = (User) iterator.next();
+			}
+			tx.commit();
+		}
+		catch (HibernateException ex) {
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return user;
+	}
 
 	public User authenticate(String uid, String upass) {
 		Session session = getSession();
@@ -30,7 +56,7 @@ public class UserDao extends BaseHibernateDao{
 		// boolean flag=false;
 		try {
 			tx = session.beginTransaction();
-			Query hql = session.createQuery("from User u where u.userid=:usid and u.userpass=:uspass ");
+			Query hql = session.createQuery("from User u where u.userId=:usid and u.userPass=:uspass ");
 			hql.setParameter("usid", uid);
 			hql.setParameter("uspass", upass);
 			List<User> result = hql.list();

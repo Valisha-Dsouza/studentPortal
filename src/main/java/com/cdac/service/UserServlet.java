@@ -38,6 +38,8 @@ public class UserServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		UserDao ud = new UserDao();
+		List<User> ls = ud.getList(User.class);
 
 	}
 
@@ -59,22 +61,22 @@ public class UserServlet extends HttpServlet {
 		user = userdao.authenticate(userid, upasswd);
 		HttpSession session = request.getSession();
 		session.setAttribute("sesuid", userid);
-		if(course!=null){
-			List<Course> courses = courseDao.findyId(course);
-			List<Subject> subjects = subjectDao.findByCourse(course);
-			response.set
-		}
-		if (user != null && user.getUserRole() == 0) {
+		/*
+		 * if(course!=null){ List<Course> courses = courseDao.findyId(course);
+		 * List<Subject> subjects = subjectDao.findByCourse(course);
+		 * request.setAttribute("course", arg1); }
+		 */
+		if (user != null && user.getUserRole() == 1) {
 
-			RequestDispatcher rd = request.getRequestDispatcher("/Studentportal.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/Studentportal.jsp");
 			rd.forward(request, response);
 			System.out.println("authentic");
-		} else if (user != null && user.getUserRole() == 1) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Coordinatorportal.jsp");
+		} else if (user != null && user.getUserRole() == 0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/Coordinatorportal.jsp");
 			rd.forward(request, response);
 		} else {
 
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("/pages/error.jsp");
 		}
 
 		// JSON call valisha

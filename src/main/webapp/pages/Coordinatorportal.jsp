@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="com.entity.User" %>
+    <%@ page import="com.cdac.model.User" %>
     <%@ page import="java.io.PrintWriter" %>
     <%@ page import="java.util.*" %>
-    <%@ page import="com.dao.UserDao" %>
+    <%@ page import="com.cdac.dao.UserDao" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,19 +27,19 @@ function openPortal(evt,portalName)
 	evt.currentTarget.className+="active";
 }
 </script>
-<link rel="stylesheet" href="tabstyle.css" >
+<link rel="stylesheet" href="pages/tabstyle.css" >
 </head>
 <body>
+<h3 id="heading">COURSE COORDINATOR PORTAL</h3>
 <%
-String user1=(String)session.getAttribute("sesuid");
+String user1=(String)session.getAttribute("sesuid");	
 PrintWriter pw=response.getWriter();
 UserDao ud=new UserDao();
-User usr=ud.getUserById(user1); 
+User usr=ud.findById(user1,User.class); 
 String username=usr.getUserName();
 %>
-<p> 
+ 
  <p style="color:blue"><% out.print("Welcome  "+ username ); %></p>
-<a href="logout.jsp" style="float:right;">Logout</a></p>
 <div class="tab">
 <button class="tablinks" onclick="openPortal(event,'Student')">Student details
 </button>
@@ -49,6 +49,8 @@ String username=usr.getUserName();
 </button>
 <button class="tablinks" onclick="openPortal(event,'Notification')">Notifications
 </button>
+<button class="tablinks"><a href="logout.jsp" style="text-decoration:none;color:inherit">Logout</a>
+		</buttton>
 </div>
 <div id="Student" class="tabcontent">
 <h3>Student details</h3>

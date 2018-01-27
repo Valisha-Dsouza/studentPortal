@@ -1,29 +1,86 @@
-body {font-family: Arial;} 
-.tab {
-    overflow: hidden;
-    border: 1px solid #00ff40;
-    background-color: #8080ff;
-    width:80%;
+*
+{
+	padding: 0;
+	margin:0;
+}
+body 
+{
+font-family: Arial;
+font-color:white;
+background-color:#ffffff;
 } 
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
+.tab 
+{
+	overflow: hidden;
+	 float:left;
+	 width:200px;
+	padding: 0;
+	margin:0;
+    position:fixed;
+    background:#1a8da9;
+} 
+.tab button   
+{  
+	background:#1ea3c4;
+	width:200px;
+	display:block;
+    color:#fffff0;
+    font-size:20px;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+    text-transform:uppercase;
+    border-bottom:1px solid 267d6f;
+  
 }
 .tab button:hover {
-    background-color: #6776fc;
+	
+    background-color: white;
+    transition:linear all 0.40s;
+    margin-left:10px;
+    color:black;
 }
 .tab button.active {
-    background-color: #800080;
+    background-color: #0080ff;
 } 
+ 
 .tabcontent {
     display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+    right:0;
+    border: none;
+     
+    position:relative;
+     padding-left:250px;
+      padding-top:50px;
+     
+}
+#heading
+{
+color: white;
+text-shadow: 1px 1px 2px black, 0 0 25px #0080ff, 0 0 5px #0080ff;
+ font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+ font-size:24px;
+text-align:center;
+width:100%;
+background:#16a5c7;
+top:3em;
+}
+.tabcontent button
+{
+	background-color: #0080ff; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.tabcontent h3
+{
+	text-tranform:uppercase;
+}
+td {
+    padding-top: .5em;
+    padding-bottom: .5em;
 }

@@ -16,7 +16,7 @@
       
       <!-- Assume test is the database name -->
     <property name = "hibernate.connection.url">
-         jdbc:mysql://localhost/test
+         jdbc:mysql://localhost/studentmanagement
       </property>
       
       <property name = "hibernate.connection.username">
@@ -24,12 +24,15 @@
       </property>
       
       <property name = "hibernate.connection.password">
-         root
+         
       </property>
       <property name="hibernate.current_session_context_class">
       org.hibernate.context.ThreadLocalSessionContext</property>
       <mapping class="com.cdac.model.User"/>
       <mapping class="com.cdac.model.Course"/>
       <mapping class="com.cdac.model.Results"/>
+      <mapping class="com.cdac.model.Attendance"/>
+      <mapping class="com.cdac.model.Subject"/>
+       
       </session-factory>
       </hibernate-configuration>

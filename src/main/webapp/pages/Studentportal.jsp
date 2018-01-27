@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	 <%@ page import="com.entity.User" %>
+	 <%@ page import="com.cdac.model.User" %>
     <%@ page import="java.io.PrintWriter" %>
     <%@ page import="java.util.*" %>
-    <%@ page import="com.dao.UserDao" %>
+    <%@ page import="com.cdac.dao.UserDao" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,52 +29,31 @@ function openPortal(evt,portalName)
 	document.getElementById(portalName).style.display="block";
 	evt.currentTarget.className+="active";
 }
-function fetch(){  
-	 $(document).ready(function(){
-	$.ajax({
-		type : "POST",
-		url : "./UserServlet",
-		dataType : 'json',
-		success : function(data) {
-		
-			document.write("<table border='1' >");
-			document.write("<th>User name</th>");
-			 document.write("<tbody id='content'></tbody>");
-		for(var i=0;i<data.length;i++)
-			{
-			var tab ="<tr><td>"+data[i].username+"</td></tr>";
-			document.getElementById("content").innerHTML+=tab;
-			}
-		
-		}
-	});
-	});
-	} 
+////refer for subject id and user id
 $(document).ready(function(){
-	$("#show").click(function(){
-		$("#showdetls").show();
-		$("#editdtls").hide();
-	});
+	 
 	$("#edit").click(function(){
 		$("#editdtls").show();
+		$("#edit").hide();
 		$("#showdetls").hide();
 	});
+	 
 });
 </script>
-<link rel="stylesheet" href="tabstyle.css">
+<link rel="stylesheet" href="pages/tabstyle.css">
 </head>
 <body>
+<h3 id="heading">STUDENT PORTAL</h3>
 <%
 String user1=(String)session.getAttribute("sesuid");
 PrintWriter pw=response.getWriter();
 UserDao ud=new UserDao();
 User usr=ud.getUserById(user1); 
 String username=usr.getUserName();
-String userphone=usr.getUserphone();
-String useremail=usr.getUseremail();
+String userphone=usr.getUserPhone();
+String useremail=usr.getUserEmail();
 %>
-<p style="color:blue"><% out.print("Welcome  "+ username ); %></p>
-<a href="logout.jsp" style="float: right;">Logout</a>
+ 
 <div class="tab">
 		<button class="tablinks" onclick="openPortal(event,'Student')">Student details
 		</button>
@@ -84,12 +63,24 @@ String useremail=usr.getUseremail();
 		</button>
 		<button class="tablinks" onclick="openPortal(event,'Notification')">Notifications
 		</button>
+		<button class="tablinks"><a href="logout.jsp" style="text-decoration:none;color:inherit">Logout</a>
+		</buttton>
 </div>
 <div id="Student" class="tabcontent">
-		<h3>Student Details</h3>
+		<h3><% out.print("Welcome  "+ username ); %></h3>
+		<br/>
+		<div id="showdetls"  >
+		 <table >
+		 <tr><td>Name</td><td><% out.print(username); %></td></tr>
+		 <tr><td>Phone</td><td><% out.print(useremail); %></td></tr>
+		 <tr><td>Email</td><td><% out.print(userphone); %></td></tr>
+		 </table>
+		 </div>
+		 <pre>
+		 
 		<button id="edit">Edit Details</button>
-		<button id="show">Show Details</button>
-		<div id="editdtls" style="display:none">
+		 </pre>
+		 <div id="editdtls" style="display:none">
 		<form  action="./UpdateServlet" >
 			<table>
 				<tr>
@@ -112,23 +103,74 @@ String useremail=usr.getUseremail();
 			</table>
 		</form>
 		</div>
-		 <div id="showdetls" style="display:none">
-		 <p><span><h7>Name:</h7></span><% out.print(username); %></p>
-		 <p><span><h7>Email:</h7></span><% out.print(useremail); %></p>
-		 <p><span><h7>Phone:</h7></span><% out.print(userphone); %></p>
-		 </div>
 	</div>
 	<div id="Results" class="tabcontent">
-	<form action="./ResultServlet">
-		<h3>Results</h3>
-		<input type="submit" value="GetResult"/>
-		</form>
+	 
 	</div>
+	
 	<div id="Attendance" class="tabcontent">
-		<h3>Attendance</h3>
-	</div>
+		</div>
+
 	<div id="Notification" class="tabcontent">
 		<h3>Notifications</h3>
 	</div>
 </body>
 </html>
+
+
+<!-- ---------function fetchResultByid(){  
+	 $(document).ready(function(){
+	$.ajax({
+		type : "POST",
+		url : "../ResultsPrintByUser",
+		dataType : 'json',
+		success : function(data) { 
+			for(var i=0;i<data.length;i++)
+			{
+			var t1="<tr><td>"+data[i].userid+"</td><td>"+data[i].subjectid+"</td><td>"+data[i].labmarks+"</td><td>"+data[i].theorymarks+"</td></tr>";
+			$("#resultTable").append(t1);
+			}
+		}
+	});
+	});
+	}
+function fetchAttendanceByid(){  
+	 $(document).ready(function(){
+	$.ajax({
+		type : "POST",
+		url : "./AttendancePrintByUser",
+		dataType : 'json',
+		success : function(data) { 
+			for(var i=0;i<data.length;i++)
+			{
+			var t1="<tr><td>"+data[i].userid+"</td><td>"+data[i].subjectid+"</td><td>"+data[i].totalClass+"</td><td>"+data[i].classAttended+"</td></tr>";
+			$("#attendTable").append(t1);
+			}
+		}
+	});
+	});
+	} <div id="Results" class="tabcontent">
+	<input type="button" value="Show Result" id="showTable" onclick="fetchResultByid()"/>
+	<div id="tablediv">
+	<table cellspacing="0" id="resultTable" border="1">
+	<tr>
+	<th scope="col">User id</th>
+	<th scope="col">Subject id</th>
+	<th scope="col">Labmarks</th>
+	<th scope="col">Theory marks</th>
+	</tr>
+	</table>
+	</div>
+	</div>
+	<div id="Attendance" class="tabcontent">
+		<input type="button" value="Show Attendance" id="showAttend" onclick="fetchAttendanceByid()"/>
+	<div id="tablediv1">
+	<table cellspacing="0" id="attendTable" border="1">
+	<tr>
+	<th scope="col">User id</th>
+	<th scope="col">Subject id</th>
+	<th scope="col">Totalclass</th>
+	<th scope="col">ClassAttended</th>
+	<th scope="col">Percent</th>
+	</tr>
+	</table>-->

@@ -13,11 +13,10 @@
 <%
 CourseDao courseDao = new CourseDao();
 List<Course> courseList = courseDao.listCourse();
-out.print(courseList.size());
 %>
 <body>
 
-<form action="./UserServlet" onsubmit="return requiredfields(this)" method="post">
+<form action="../UserServlet" onsubmit="return requiredfields(this)" method="post">
 <table class="log">
 
 <tr>

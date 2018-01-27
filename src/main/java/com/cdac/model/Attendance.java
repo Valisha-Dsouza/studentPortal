@@ -4,7 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/*
+ * create table db_student_attendance(student_id varchar(20),total_class int(3),
+ class_attended int(3),subject_id varchar(20),percent float(3) ,primary key(student_id,subject_id));
+ * */
 @Entity
 @Table(name = "db_student_attendance")
 public class Attendance {

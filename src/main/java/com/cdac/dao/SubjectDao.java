@@ -15,6 +15,6 @@ public class SubjectDao extends BaseHibernateDao{
 	}
 	
 	public List<Subject> findByCourse(String courseId){
-		return executeQuery("from Subject where courseId ="+courseId);
+		return executeQuery("from Subject where courseId ='"+courseId+"'");
 	}
 }

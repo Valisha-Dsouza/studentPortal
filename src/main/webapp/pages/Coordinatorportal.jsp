@@ -124,6 +124,15 @@
 								"targets" : 0
 							} ]
 						});
+						$('#attendance_tb').DataTable({
+							"sPaginationType" : "simple",
+							"bJQueryUI" : true,
+							"bProcessing" : true,
+							"bServerSide" : true,
+							"sAjaxSource" : "CoordinatorAttendanceService",
+							"iDisplayLength" : 10,
+							"iDisplayStart" : 0,
+						});
 						$("#UploadForm").ajaxForm(options);
 					});
 </script>
@@ -186,26 +195,26 @@
 			<br />
 			<div id="message"></div>
 		</form>
-			<table name="tb" id="result_tb"
-				class="table table-striped table-bordered" cellspacing="0"
-				width="100%">
-				<thead>
-					<tr>
-						<th>UserId</th>
-						<th>UserName</th>
-						<th>Email</th>
-						<th>Phone No</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-				<tfoot></tfoot>
-			</table>
-		</div>
+		<table name="tb" id="result_tb"
+			class="table table-striped table-bordered" cellspacing="0"
+			width="100%">
+			<thead>
+				<tr>
+					<th>UserId</th>
+					<th>UserName</th>
+					<th>Email</th>
+					<th>Phone No</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot></tfoot>
+		</table>
+	</div>
 
 
 
-	<div id="Attendance" class="tabcontent">
+	<div id="Attendance" class="tabcontent container">
 		<h3>Attendance</h3>
 		<form action="Attendance" method="post">
 			<table>
@@ -235,6 +244,21 @@
 				</tr>
 			</table>
 		</form>
+		<table name="tb" id="attendance_tb"
+			class="table table-striped table-bordered" cellspacing="0"
+			width="100%">
+			<thead>
+				<tr>
+					<th>StudentId</th>
+					<th>SubjectId</th>
+					<th>Total Class</th>
+					<th>Class Attended</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot></tfoot>
+		</table>
 	</div>
 	<div id="Notification" class="tabcontent">
 		<h3>Notifications</h3>

@@ -28,6 +28,12 @@
   	<description></description>
   	<servlet-class>com.cdac.service.StudentResultService</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>CoordinatorAttendanceService</servlet-name>
+  	<display-name>CoordinatorAttendanceService</display-name>
+  	<description></description>
+  	<servlet-class>com.cdac.service.CoordinatorAttendanceService</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>NotificationService</servlet-name>
   	<url-pattern>/NotificationService</url-pattern>
@@ -43,5 +49,9 @@
   <servlet-mapping>
   	<servlet-name>StudentResultService</servlet-name>
   	<url-pattern>/StudentResultService</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CoordinatorAttendanceService</servlet-name>
+  	<url-pattern>/CoordinatorAttendanceService</url-pattern>
   </servlet-mapping>
 </web-app>

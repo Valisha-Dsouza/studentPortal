@@ -23,7 +23,16 @@ public class User
 	String userEmail;
 	@Column(name="userphone")
 	String userPhone;
+	@Column(name="userCourse")
+	String userCourse;
+
 	
+	public String getUserCourse() {
+		return userCourse;
+	}
+	public void setUserCourse(String userCourse) {
+		this.userCourse = userCourse;
+	}
 	public String getUserId() {
 		return userId;
 	}

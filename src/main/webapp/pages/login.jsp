@@ -30,7 +30,7 @@ List<Course> courseList = courseDao.listCourse();
 <tr>
 <td>Course</td>
 <td>
-<select> 
+<select name="courseId"> 
 <%for(Course course:courseList){%>
         <option value=<%=course.getCourseId()%>><%=course.getCourseName()%></option>
 <%} %>

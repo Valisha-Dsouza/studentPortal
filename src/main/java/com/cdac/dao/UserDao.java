@@ -1,6 +1,5 @@
 package com.cdac.dao;
 
-
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -10,24 +9,21 @@ import org.hibernate.Transaction;
 
 import com.cdac.model.User;
 
+public class UserDao extends BaseHibernateDao {
 
-public class UserDao extends BaseHibernateDao{
-	
-	
-	public List<User> listCourse(){
+	public List<User> listCourse() {
 		return getList(User.class);
 	}
-	
-	public void delete(User subject){
+
+	public void delete(User subject) {
 		delete(subject);
 	}
-	public User getUserById(String usid)
-	{
+
+	public User getUserById(String usid) {
 		Session session = getSession();
 		Transaction tx = null;
-		User user=null;
-		try
-		{
+		User user = null;
+		try {
 			tx = session.beginTransaction();
 			Query hql = session.createQuery("from User u where u.userId=:uid ");
 			hql.setParameter("uid", usid);
@@ -38,8 +34,7 @@ public class UserDao extends BaseHibernateDao{
 				user = (User) iterator.next();
 			}
 			tx.commit();
-		}
-		catch (HibernateException ex) {
+		} catch (HibernateException ex) {
 			if (tx != null)
 				tx.rollback();
 			ex.printStackTrace();
@@ -47,6 +42,26 @@ public class UserDao extends BaseHibernateDao{
 			session.close();
 		}
 		return user;
+	}
+
+	public List<User> getStudentByCourseId(String courseId) {
+		Session session = getSession();
+		Transaction tx = null;
+		List<User> users = null;
+		try {
+			tx = session.beginTransaction();
+			Query hql = session.createQuery("from User u where u.userCourse=:cid and u.userRole=1 ");
+			hql.setParameter("cid", courseId);
+			users = hql.list();
+			tx.commit();
+		} catch (HibernateException ex) {
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return users;
 	}
 
 	public User authenticate(String uid, String upass) {
@@ -66,8 +81,7 @@ public class UserDao extends BaseHibernateDao{
 				user = (User) iterator.next();
 			}
 			tx.commit();
-		}
-		catch (HibernateException ex) {
+		} catch (HibernateException ex) {
 			if (tx != null)
 				tx.rollback();
 			ex.printStackTrace();
@@ -76,25 +90,23 @@ public class UserDao extends BaseHibernateDao{
 		}
 		return user;
 	}
-	
-	public int updateUser(String uid,String uname,String uemail,String uphone)
-	{
+
+	public int updateUser(String uid, String uname, String uemail, String uphone) {
 		Session session = getSession();
 		Transaction tx = null;
-		int result=0;
+		int result = 0;
 		// boolean flag=false;
 		try {
 			tx = session.beginTransaction();
-			String updt="update User u set u.username=:usname,u.useremail=:usemail,u.userphone=:usphone where u.userid=:usid";
+			String updt = "update User u set u.username=:usname,u.useremail=:usemail,u.userphone=:usphone where u.userid=:usid";
 			Query hql = session.createQuery(updt);
 			hql.setParameter("usid", uid);
 			hql.setParameter("usname", uname);
 			hql.setParameter("usemail", uemail);
-			hql.setParameter("usphone",uphone);
-			result=hql.executeUpdate();
+			hql.setParameter("usphone", uphone);
+			result = hql.executeUpdate();
 			tx.commit();
-		}
-		catch (HibernateException ex) {
+		} catch (HibernateException ex) {
 			if (tx != null)
 				tx.rollback();
 			ex.printStackTrace();
@@ -104,5 +116,5 @@ public class UserDao extends BaseHibernateDao{
 		return result;
 
 	}
-	
+
 }

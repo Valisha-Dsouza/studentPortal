@@ -20,8 +20,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
 	src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
 <script
 	src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>

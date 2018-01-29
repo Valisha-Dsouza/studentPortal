@@ -46,11 +46,10 @@ public class AttendanceDao extends BaseHibernateDao {
 			}
 			return user; 
 	}
-	public static void main(String[] args)
-	{
-		AttendanceDao at=new AttendanceDao();
-		List ls=at.getAttendanceById("17085012001");
-		System.out.println(ls.size());
-		
+	public void insert(List<Attendance> attendance){
+		for(Attendance attn:attendance){
+			insert(attn);
+		}
 	}
+	 
 }

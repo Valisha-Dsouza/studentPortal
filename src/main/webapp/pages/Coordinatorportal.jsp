@@ -1,3 +1,10 @@
+<%@page import="com.cdac.dao.CourseDao"%>
+<%@page import="com.cdac.model.Course"%>
+<%@page import="com.cdac.model.Subject" %>
+<%@page import="com.cdac.dao.SubjectDao" %>
+<%@page import="com.cdac.dao.AttendanceDao" %>
+<%@page import="com.cdac.dao.ResultsDao" %>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.cdac.model.User"%>
@@ -23,151 +30,170 @@
 	src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
 <script
 	src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>
+ <link rel="stylesheet" href="pages/tabstyle.css">
+<script  >
+$(document).ready(function () {
+    $('.nav ul li:first').addClass('active');
+    $('.tabcontent:not(:first)').hide();
+    $('.nav ul li a').click(function (event) {
+        event.preventDefault();
+        var content = $(this).attr('href');
+        $(this).parent().addClass('active');
+        $(this).parent().siblings().removeClass('active');
+        $(content).show();
+        $(content).siblings('.tabcontent').hide();
+        $('#tb1').DataTable({
+    		"sPaginationType" : "simple",
+    		"bJQueryUI" : true,
+    		"bProcessing" : true,
+    		"bServerSide" : true,
+    		"sAjaxSource" : "UserServlet",
+    		"iDisplayLength" : 10,
+    		"iDisplayStart" : 0,
+    		"columnDefs" : [ {
+    			"width" : "20%",
+    			"targets" : 0
+    		}, {
+    			"width" : "20%",
+    			"targets" : 0
+    		}, {
+    			"width" : "20%",
+    			"targets" : 0
+    		}, {
+    			"width" : "20%",
+    			"targets" : 0
+    		} ]
+    	});
+		$('#result_tb').DataTable({
+			"sPaginationType" : "simple",
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : "ResultServlet",
+			"iDisplayLength" : 10,
+			"iDisplayStart" : 0,
+			"columnDefs" : [ {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			}, {
+				"width" : "20%",
+				"targets" : 0
+			} ]
+		});
+		$('#attendance_tb').DataTable({
+			"sPaginationType" : "simple",
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : "CoordinatorAttendanceService",
+			"iDisplayLength" : 10,
+			"iDisplayStart" : 0,
+		});
 
-<script>
-	function openPortal(evt, portalName) {
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace("active", "");
-		}
-		document.getElementById(portalName).style.display = "block";
-		evt.currentTarget.className += "active";
+    });
+});
+function openPortal(evt,portalName)
+{
+	var i,tabcontent,tablinks;
+	tabcontent=document.getElementsByClassName("tabcontent");
+	for(i=0;i<tabcontent.length;i++)
+	{
+		tabcontent[i].style.display="none";
 	}
-	//chANGES
-	$(document)
-			.ready(
-					function() {
-						var options = {
-							beforeSend : function() {
-								$("#progressbox").show();
-								// clear everything
-								$("#progressbar").width('0%');
-								$("#message").empty();
-								$("#percent").html("0%");
-							},
-							uploadProgress : function(event, position, total,
-									percentComplete) {
-								$("#progressbar").width(percentComplete + '%');
-								$("#percent").html(percentComplete + '%');
+	tablinks=document.getElementsByClassName("tablinks");
+	for(i=0;i<tablinks.length;i++)
+	{
+	tablinks[i].className=tablinks[i].className.replace("active","");
+	}
+	document.getElementById(portalName).style.display="block";
+	evt.currentTarget.className+="active";
+}
+function openResPortal(evt,portalName)
+{
+	var i,tabcontent,tablinks;
+	tabcontent=document.getElementsByClassName("result");
+	for(i=0;i<tabcontent.length;i++)
+	{
+		tabcontent[i].style.display="none";
+	}
+	tablinks=document.getElementsByClassName("resultlinks");
+	for(i=0;i<tablinks.length;i++)
+	{
+	tablinks[i].className=tablinks[i].className.replace("active","");
+	}
+	document.getElementById(portalName).style.display="block";
+	evt.currentTarget.className+="active";
+}
 
-								// change message text to red after 50%
-								if (percentComplete > 50) {
-									$("#message")
-											.html(
-													"<font color='red'>File Upload is in progress</font>");
-								}
-							},
-							success : function() {
-								$("#progressbar").width('100%');
-								$("#percent").html('100%');
-							},
-							complete : function(response) {
-								$("#message")
-										.html(
-												"<font color='blue'>Your file has been uploaded!</font>");
-							},
-							error : function() {
-								$("#message")
-										.html(
-												"<font color='red'> ERROR: unable to upload files</font>");
-							}
-						};
-						$('#tb1').DataTable({
-							"sPaginationType" : "simple",
-							"bJQueryUI" : true,
-							"bProcessing" : true,
-							"bServerSide" : true,
-							"sAjaxSource" : "UserServlet",
-							"iDisplayLength" : 10,
-							"iDisplayStart" : 0,
-							"columnDefs" : [ {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							} ]
-						});
-						$('#result_tb').DataTable({
-							"sPaginationType" : "simple",
-							"bJQueryUI" : true,
-							"bProcessing" : true,
-							"bServerSide" : true,
-							"sAjaxSource" : "ResultServlet",
-							"iDisplayLength" : 10,
-							"iDisplayStart" : 0,
-							"columnDefs" : [ {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							}, {
-								"width" : "20%",
-								"targets" : 0
-							} ]
-						});
-						$('#attendance_tb').DataTable({
-							"sPaginationType" : "simple",
-							"bJQueryUI" : true,
-							"bProcessing" : true,
-							"bServerSide" : true,
-							"sAjaxSource" : "CoordinatorAttendanceService",
-							"iDisplayLength" : 10,
-							"iDisplayStart" : 0,
-						});
-						$("#UploadForm").ajaxForm(options);
-					});
+function openAttenPortal(evt,portalName)
+{
+	var i,tabcontent,tablinks;
+	tabcontent=document.getElementsByClassName("attendance");
+	for(i=0;i<tabcontent.length;i++)
+	{
+		tabcontent[i].style.display="none";
+	}
+	tablinks=document.getElementsByClassName("attendlinks");
+	for(i=0;i<tablinks.length;i++)
+	{
+	tablinks[i].className=tablinks[i].className.replace("active","");
+	}
+	document.getElementById(portalName).style.display="block";
+	evt.currentTarget.className+="active";
+}
+
 </script>
-<link rel="stylesheet" href="pages/tabstyle.css">
 </head>
+ 
+<%
+ 
+String courseid=(String)session.getAttribute("courseid");
+SubjectDao subjectDao = new SubjectDao();
+List<Subject> subList = subjectDao.findByCourse(courseid);
+ 
+%>
 <body>
-	<h3 id="heading">COURSE COORDINATOR PORTAL</h3>
-	<%
-		String user1 = (String) session.getAttribute("sesuid");
-		PrintWriter pw = response.getWriter();
-		UserDao ud = new UserDao();
-		User usr = ud.findById(user1, User.class);
-		String username = usr.getUserName();
-	%>
+<header >COURSE COORDINATOR PORTAL</header>
+<%
+String user1=(String)session.getAttribute("sesuid");	
+PrintWriter pw=response.getWriter();
+UserDao ud=new UserDao();
+User usr=ud.findById(user1,User.class); 
+String username=usr.getUserName();
+%> 
+<nav class="tab">
+<ul>
+<li><a class="tablinks" href="#Student" onclick="openPortal(event,'Student')">Student details</a>
+</li>
+<li><a class="tablinks" href="#Results" onclick="openPortal(event,'Results')">Results</a>
 
-	<p style="color: blue">
-		<%
-			out.print("Welcome  " + username);
-		%>
-	</p>
-	<div class="tab">
-		<button class="tablinks" onclick="openPortal(event,'Student')">Student
-			details</button>
-		<button class="tablinks" onclick="openPortal(event,'Results')">Results
-		</button>
-		<button class="tablinks" onclick="openPortal(event,'Attendance')">Attendance
-		</button>
-		<button class="tablinks" onclick="openPortal(event,'Notification')">Notifications
-		</button>
-		<button class="tablinks">
-			<a href="logout.jsp" style="text-decoration: none; color: inherit">Logout</a>
-			</buttton>
-	</div>
-	<div id="Student" class="tabcontent container">
-		<table name="tb" id="tb1" class="table table-striped table-bordered"
+
+
+</li>
+<li>
+<a class="tablinks" href="#Attendance" onclick="openPortal(event,'Attendance')">Attendance
+</a>
+</li>
+<li>
+<a class="tablinks" href="#Notification" onclick="openPortal(event,'Notification')">Notifications
+</a></li>
+<li>
+<a  class="tablinks" href='pages/logout.jsp';">Logout</a></li>
+</ul>
+</nav>
+<div>
+<!-- ------STUDENT LIST IN COORDINATOR PORTAL -->
+<div id="Student" class="tabcontent container" style="display:none;">
+ <table name="tb" id="tb1" class="table table-striped table-bordered"
 			cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -182,19 +208,46 @@
 			<tfoot></tfoot>
 		</table>
 	</div>
-	<div id="Results" class="tabcontent container">
-		<h3>Results</h3>
-		<form id="UploadForm" action="./ResultServlet" method="post"
-			enctype="multipart/form-data">
-			<input type="file" id="myfile" name="myfile" accept=".xlsx,.xls">
-			<input type="submit" value="Upload">
-			<div id="progressbox">
-				<div id="progressbar"></div>
-				<div id="percent">0%</div>
-			</div>
-			<br />
-			<div id="message"></div>
-		</form>
+</div>
+
+<!-- ------RESULTS IN COORDINATOR PORTAL -->
+<div id="Results" class="tabcontent"  style="display:none;">
+<table ><tr ><td> <a class="resultlinks" href="#fileUpload" onclick="openResPortal(event,'fileUpload')"><button class="cp">Upload </button></a></td>
+<td ><a class="resultlinks" href="#viewResult" onclick="openResPortal(event,'viewResult')"><button class="cp">View </button></a></tr>
+</table>
+ 
+ <!-- for results upload  and view -->
+ <div id="fileUpload"   class="result" style="display:none;">
+<form  method="post" action="./ResultServlet" enctype='multipart/form-data' ">
+<table>
+<tr>
+<td>Select the subject</td>
+<td>
+<select name="subid">
+<%for(Subject sub:subList){%>
+        <option value=<%=sub.getSubjectId()%>><%=sub.getSubjectName()%></option>
+<%} %>
+ </select>
+ </td>
+ </tr>
+ <tr>
+ <td>
+<input type="file" name="resultfile" accept=".xlsx,.xls"/>
+</td>
+<td>
+<input type="submit" value="Upload">
+</td>
+</tr>
+</table>
+</form>
+</div>
+<!-- -----------------for view -->
+<div id="viewResult" style="display:none;" class="result"> 
+<p> view result</p>
+<form method="post" action=" pages/sucess.jsp   ">
+<input type="submit" value="View Result">
+</form>
+</div>
 		<table name="tb" id="result_tb"
 			class="table table-striped table-bordered" cellspacing="0"
 			width="100%">
@@ -212,39 +265,53 @@
 		</table>
 	</div>
 
+</div>
 
+<!-- ATTENDANCE IN COORDINATOR PORTAL -->
+<div id="Attendance" class="tabcontent" style="display:none;">
+ <table>
+  
+<tr> <td><a class="attendlinks" href="#attendUpload" onclick="openAttenPortal(event,'attendUpload')">
+<button class="cp"  >Upload</button>
+</a></td>
+ 
+<td ><a class="attendlinks" href="#viewAttend" onclick="openAttenPortal(event,'viewAttend')">
+<button class="cp" >View </button>
+</a></td>
+</tr>
+</table>
 
-	<div id="Attendance" class="tabcontent container">
-		<h3>Attendance</h3>
-		<form action="Attendance" method="post">
-			<table>
-				<tr>
-					<td>Subject Id</td>
-					<td><input type="text" name="subid" /></td>
-				</tr>
-				<tr>
-					<td>Student Id</td>
-					<td><input type="text" name="stuid" /></td>
-				</tr>
-				<tr>
-					<td>Total Classes</td>
-					<td><input type="number" name="total" />
-				</tr>
-				<tr>
-					<td>Classes Attended</td>
-					<td><input type="number" name="class_att" /></td>
-				</tr>
-				<tr>
-					<td>Percent</td>
-					<td><input type="number" name="attend_pct" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" name="submit" /></td>
-					<td><input type="reset" name="reset" /></td>
-				</tr>
-			</table>
-		</form>
-		<table name="tb" id="attendance_tb"
+<!-- for results upload  and view -->
+<div id="attendUpload" class="attendance" style="display:none;">
+<form id="fileUpload" method="post" action="./CoordinatorAttendanceService" enctype='multipart/form-data'>
+<table>
+<tr>
+<td>
+<p>Select subject name</p></td>
+<td>
+<select name="subid"> 
+<%for(Subject sub:subList){%>
+        <option value=<%=sub.getSubjectId()%>><%=sub.getSubjectName()%></option>
+<%} %>
+</select>
+</td>
+<tr>
+<td>
+<input type="file" name="attendancefile" accept=".xlsx,.xls"/></td>
+<td>
+<input type="submit" value="Upload"></td>
+</tr>
+</table>
+</form>
+ </div>
+ 
+ <!-- -----------------for view -->
+ <div id="viewAttend" class="attendance" style="display:none;">
+ 
+ <form method="post" action=" pages/sucess.jsp   ">
+<input type="submit" value="View Attendance">
+</form>
+	<table name="tb" id="attendance_tb"
 			class="table table-striped table-bordered" cellspacing="0"
 			width="100%">
 			<thead>
@@ -260,9 +327,14 @@
 			<tfoot></tfoot>
 		</table>
 	</div>
-	<div id="Notification" class="tabcontent">
-		<h3>Notifications</h3>
-		<p>New notifications</p>
-	</div>
+	
+ </div>
+ </div>
+<div id="Notification" class="tabcontent" style="display:none;">
+<h3>Notifications</h3>
+<p>New notifications</p>
+</div>
+
+</div>
 </body>
 </html>

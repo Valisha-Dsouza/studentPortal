@@ -1,6 +1,9 @@
 package com.cdac.service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,12 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.poi.ss.usermodel.Row;
 
 import com.cdac.dao.AttendanceDao;
 import com.cdac.dao.SubjectDao;
 import com.cdac.model.Attendance;
+import com.cdac.model.AttendanceComposite;
 import com.cdac.model.Results;
 import com.cdac.model.Subject;
+import com.cdac.utils.ExcelReader;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -139,7 +147,27 @@ public class CoordinatorAttendanceService extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String sub=(String) request.getAttribute("subid");
+		PrintWriter pw=response.getWriter();
+		Part filePart = request.getPart("attendancefile");
+		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE
+		List<Attendance> attendance = new ArrayList<Attendance>();													// fix.
+		InputStream fileContent = filePart.getInputStream();
+		List<Row> rows = ExcelReader.read(fileContent);
+		for (Row row : rows) {
+			Attendance result = new Attendance();
+			result.setAttendanceId(new AttendanceComposite(row.getCell(0).getStringCellValue(),sub));
+			result.setTotalClass((int)row.getCell(1).getNumericCellValue());
+			result.setClassAttended((int)row.getCell(2).getNumericCellValue());
+			attendance.add(result);
+		}
+		AttendanceDao dao = new AttendanceDao();
+		dao.insert(attendance);
+		
+		if(filePart!=null)
+		{
+			pw.println("upload successful");
+		}
 	}
 
 }

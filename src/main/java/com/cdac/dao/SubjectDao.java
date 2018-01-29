@@ -16,5 +16,15 @@ public class SubjectDao extends BaseHibernateDao{
 	
 	public List<Subject> findByCourse(String courseId){
 		return executeQuery("from Subject where courseId ='"+courseId+"'");
+
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		SubjectDao sd=new SubjectDao();
+		List<Subject> list=sd.findByCourse("DAC");
+		System.out.println(list.size());
+
 	}
 }

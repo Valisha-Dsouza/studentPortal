@@ -7,7 +7,11 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
-
+/*
+ * create table resultsproject(userid varchar(50),subjectid varchar(50),labmarks int(3),theorymarks int(3),
+ * res varchar(5),primary key(userid,subjectid));
+ * 
+ * */
 @Entity
 @Table(name = "resultsproject")
 public class Results {
@@ -18,7 +22,7 @@ public class Results {
 	@Column(name = "theorymarks")
 	int theoryMarks;
 	
-	@Column(name="status")
+	@Column(name="res")
 	private String status;
 	
 	public String getStatus() {
@@ -52,5 +56,7 @@ public class Results {
 	public void setTheoryMarks(int theoryMarks) {
 		this.theoryMarks = theoryMarks;
 	}
+
+	 
 
 }

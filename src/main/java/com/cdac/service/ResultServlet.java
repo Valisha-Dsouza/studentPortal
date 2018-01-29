@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -141,6 +142,7 @@ public class ResultServlet extends HttpServlet {
 				endParam = displayStart + displayLength;
 			}
 
+
 			for (int i = startParam; i < endParam; i++) {
 				JsonArray row = new JsonArray();
 				row.add(new JsonPrimitive(outList.get(i).getResultId().getUserId()));
@@ -160,22 +162,28 @@ public class ResultServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(request.getParameter("id"));
-		Part filePart = request.getPart("file");
+		 PrintWriter pw=response.getWriter();
+		Part filePart = request.getPart("resultfile");
+		String sub=(String) request.getAttribute("subid");
 		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE
 		List<Results> results = new ArrayList<Results>(); // fix.
 		InputStream fileContent = filePart.getInputStream();
 		List<Row> rows = ExcelReader.read(fileContent);
 		for (Row row : rows) {
 			Results result = new Results();
-			result.setResultId(
-					new ResultComposite(row.getCell(0).getStringCellValue(), row.getCell(1).getStringCellValue()));
-			result.setLabMarks((int) row.getCell(2).getNumericCellValue());
-			result.setTheoryMarks((int) row.getCell(3).getNumericCellValue());
+			result.setResultId(new ResultComposite(row.getCell(0).getStringCellValue(), sub));
+			result.setLabMarks((int)row.getCell(1).getNumericCellValue());
+			result.setTheoryMarks((int)row.getCell(2).getNumericCellValue());
+			result.setStatus(row.getCell(3).getStringCellValue());
 			results.add(result);
 		}
 		ResultsDao dao = new ResultsDao();
 		dao.insert(results);
-
+		
+		if(filePart!=null)
+		{
+			pw.println("upload successful");
+		}
+			
 	}
 }

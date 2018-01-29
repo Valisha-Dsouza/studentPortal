@@ -20,25 +20,24 @@ List<Course> courseList = courseDao.listCourse();
 <table class="log">
 
 <tr>
-<td>LoginId</td><td><input type="text" name="loginid" value=""/> <span class="required">*</span></td>
+<td>LoginId</td><td><input type="text" name="loginid" value=""/> <span class="require">*</span></td>
 </tr>
 
 <tr>
 <td>Password</td>
-<td><input type="password" name="upass" value=""/> <span class="required">*</span></td>
+<td><input type="password" name="upass" value=""/> <span class="require">*</span></td>
 </tr>
 <tr>
 <td>Course</td>
 <td>
-<select name="courseId"> 
+
+<select required name="courseId" > 
 <%for(Course course:courseList){%>
         <option value=<%=course.getCourseId()%>><%=course.getCourseName()%></option>
 <%} %>
- 
+ </select>
 </td>
-</tr>
-
-</select>
+</tr> 
 </td>
 </tr>
 <tr>
@@ -52,7 +51,6 @@ List<Course> courseList = courseDao.listCourse();
 <td><input type="submit" value="Login"/></td>
 </tr>
 </table>
-
 </form>
 </body>
 </html>

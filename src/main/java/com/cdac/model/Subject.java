@@ -4,7 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/*
+ * create table db_subject_info (subject_id varchar(10),subject_name varchar(20)
+course_id varchar(20),primary key(subject_id));
+ * 
+ * 
+ * */
 @Entity
 @Table(name = "db_subject_info")
 public class Subject {

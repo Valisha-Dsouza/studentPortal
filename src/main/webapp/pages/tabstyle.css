@@ -1,14 +1,54 @@
-*
-{
-	padding: 0;
-	margin:0;
-}
-body 
-{
-font-family: Arial;
-font-color:white;
-background-color:#ffffff;
+*{
+	padding:0px;
+	margin:0px;
+	background-color:#f3f3f3;
 } 
+
+header
+{
+color:#868e9f;
+margin:0px;
+ font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+ font-size:50px;
+text-align:center;
+width:100%;
+height:52px;
+background:#343a40;
+padding-top:10px;
+padding-bottom:10px;
+}
+ #heading
+ {
+ padding-top:0px;
+padding-bottom:0px;
+}
+ul{
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+.tabcontent{
+	position:absolute;
+	 margin-left:300px;
+	 padding-top:52px;
+	 border:none;
+}
+
+li a{
+	display:block;
+	text-decoration:none;
+	
+}
+li a 
+{
+	 
+	color:white;
+	font-weight:bold;
+	height:50px;
+	width:150px;
+	font-size:18px;
+}
 .tab 
 {
 	overflow: hidden;
@@ -17,70 +57,62 @@ background-color:#ffffff;
 	padding: 0;
 	margin:0;
     position:fixed;
-    background:#1a8da9;
+    background:#343a40;
+    height:-webkit-fill-available;
 } 
-.tab button   
+.tab a   
 {  
-	background:#1ea3c4;
+	background:#343a40;
 	width:200px;
 	display:block;
-    color:#fffff0;
-    font-size:20px;
+    color: #868e9f;
+    font-size:18px;
     text-align: center;
-    padding: 20px 16px;
+    padding: 20px 6px;
     text-decoration: none;
     text-transform:uppercase;
     border-bottom:1px solid 267d6f;
   
 }
-.tab button:hover {
+.tab a:hover {
 	
     background-color: white;
     transition:linear all 0.40s;
     margin-left:10px;
     color:black;
 }
-.tab button.active {
+.tab a.active {
     background-color: #0080ff;
 } 
- 
-.tabcontent {
-    display: none;
-    right:0;
+
+button,input[type=submit],input[type=reset] {
+    background-color: #343a40; 
     border: none;
-     
-    position:relative;
-     padding-left:250px;
-      padding-top:50px;
-     
-}
-#heading
-{
-color: white;
-text-shadow: 1px 1px 2px black, 0 0 25px #0080ff, 0 0 5px #0080ff;
- font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- font-size:24px;
-text-align:center;
-width:100%;
-background:#16a5c7;
-top:3em;
-}
-.tabcontent button
-{
-	background-color: #0080ff; 
-    border: none;
-    color: white;
+    color: #868e9f;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
 }
-.tabcontent h3
+.cp
 {
-	text-tranform:uppercase;
-}
-td {
-    padding-top: .5em;
-    padding-bottom: .5em;
+	    background-color: #343a40; 
+    border: none;
+    color: #868e9f;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:200px;
+  }  
+
+input[type=text]{
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }

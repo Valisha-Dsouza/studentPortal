@@ -24,6 +24,18 @@
 <script
 	src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>
 <script>
+	$(document).ready(function() {
+		$('.nav ul li:first').addClass('active');
+		$('.tabcontent:not(:first)').hide();
+		$('.nav ul li a').click(function(event) {
+			event.preventDefault();
+			var content = $(this).attr('href');
+			$(this).parent().addClass('active');
+			$(this).parent().siblings().removeClass('active');
+			$(content).show();
+			$(content).siblings('.tabcontent').hide();
+		});
+	});
 	function openPortal(evt, portalName) {
 		var i, tabcontent, tablinks;
 		tabcontent = document.getElementsByClassName("tabcontent");
@@ -91,12 +103,13 @@
 				"targets" : 0
 			} ]
 		});
+
 	});
 </script>
 <link rel="stylesheet" href="pages/tabstyle.css">
 </head>
 <body>
-	<h3 id="heading">STUDENT PORTAL</h3>
+	<header id="heading" >STUDENT PORTAL</header>
 	<%
 		String user1 = (String) session.getAttribute("sesuid");
 		PrintWriter pw = response.getWriter();
@@ -106,21 +119,24 @@
 		String userphone = usr.getUserPhone();
 		String useremail = usr.getUserEmail();
 	%>
-
-	<div class="tab">
-		<button class="tablinks" onclick="openPortal(event,'Student')">Student
-			details</button>
-		<button class="tablinks" onclick="openPortal(event,'Results')">Results
-		</button>
-		<button class="tablinks" onclick="openPortal(event,'Attendance')">Attendance
-		</button>
-		<button class="tablinks" onclick="openPortal(event,'Notification')">Notifications
-		</button>
-		<button class="tablinks">
-			<a href="logout.jsp" style="text-decoration: none; color: inherit">Logout</a>
-			</buttton>
-	</div>
-	<div id="Student" class="tabcontent">
+	<nav class="tab">
+	<ul>
+		<li><a class="tablinks" href="#Student"
+			onclick="openPortal(event,'Student')"> Student
+					details </a></li>
+		<li><a class="tablinks" href="#Results"
+			onclick="openPortal(event,'Results')"> Results  </a></li>
+		<li><a class="tablinks" href="#Attendance"
+			onclick="openPortal(event,'Attendance')"> Attendance 
+		</a></li>
+		<li><a class="tablinks" href="#Notification"
+			onclick="openPortal(event,'Notification')"> Notifications 
+		</a></li>
+		<li><a class="tablinks" href='pages/logout.jsp'> Logout </a></li>
+	</ul>
+	</nav>
+	<!-- STUDENT PORTAL STUDENT DETAILS -->
+	<div id="Student" class="tabcontent" style="display: none">
 		<h3>
 			<%
 				out.print("Welcome  " + username);
@@ -155,10 +171,10 @@
 				</tr>
 			</table>
 		</div>
-		<pre>
-		 
+
+
 		<button id="edit">Edit Details</button>
-		 </pre>
+
 		<div id="editdtls" style="display: none">
 			<form action="./UpdateServlet">
 				<table>
@@ -168,12 +184,11 @@
 					</tr>
 					<tr>
 						<td>Phone</td>
-						<td><input type="number" name="uphone" /></td>
+						<td><input type="text" name="uphone" /></td>
 					</tr>
 					<tr>
 						<td>Email</td>
-						<td><input type="email" name="uemail"
-							placeholder="someone@example.com" /></td>
+						<td><input type="text" name="uemail" placeholder="someone@example.com" /></td>
 					</tr>
 					<tr>
 						<td><input type="submit" value="Submit"></td>
@@ -183,24 +198,28 @@
 			</form>
 		</div>
 	</div>
-	<div id="Results" class="tabcontent container">
-		<table name="tb" id="tb1" class="table table-striped table-bordered"
-			cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>Subject</th>
-					<th>Lab</th>
-					<th>Theory</th>
-					<th>Pass/Fail</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			<tfoot></tfoot>
-		</table>
-	</div>
 
-	<div id="Attendance" class="tabcontent container">
+	<!-- STUDENTS RESULTS STUDENT PORTAL -->
+	<div id="Results" class="tabcontent container " style="display: none">
+		<div class="container">
+			<table name="tb" id="tb1" class="table table-striped table-bordered"
+				cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Lab</th>
+						<th>Theory</th>
+						<th>Pass/Fail</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				<tfoot></tfoot>
+			</table>
+		</div>
+	</div>
+	<!-- STUDENT PORTAL ATTENDANCE -->
+	<div id="Attendance" class="tabcontent container" style="display: none">
 		<table name="tb" id="attendance_tb1" class="table table-striped table-bordered"
 			cellspacing="0" width="100%">
 			<thead>
@@ -215,8 +234,8 @@
 			<tfoot></tfoot>
 		</table>
 	</div>
-
-	<div id="Notification" class="tabcontent">
+	<!-- STUDENT PORTAL NOTIFICATION -->
+	<div id="Notification" class="tabcontent" style="display: none">
 		<h3>Notifications</h3>
 	</div>
 </body>
